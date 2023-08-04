@@ -1,5 +1,5 @@
 if(LOCAL_SDL)
-    add_subdirectory(SDL)
+    add_subdirectory(SDL EXCLUDE_FROM_ALL)
 else()
     find_package(SDL3 REQUIRED CONFIG REQUIRED COMPONENTS SDL3-shared)
 endif()
