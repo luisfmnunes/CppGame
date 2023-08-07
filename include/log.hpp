@@ -1,6 +1,6 @@
 #pragma once
 
-#include<spdlog.h>
+#include<spdlog/spdlog.h>
 #include<source_location>
 
 #define ENGINE_DEFAULT_LOGGER_NAME "defaultlogger"
@@ -22,11 +22,11 @@
     #define LOG_FATAL(...) if(spdlog::get(ENGINE_DEFAULT_LOGGER_NAME) != nullptr) spdlog::get(ENGINE_DEFAULT_LOGGER_NAME)->critical(__VA_ARGS__);
     #define LOG_ASSERT(x, msg) if ((x)) {} else {auto s = std::source_location::current(); LOG_FATAL("ASSERT - {} | MSG: {}, {}:{}:{}.{}", #x, msg, s.file_name(), s.function_name(), s.line(), s.columns()); DEBUG_BREAK }
 #else
-    #define LOG_TRACE (void)0
-    #define LOG_DEBUG (void)0
-    #define LOG_INFO (void)0
-    #define LOG_WARN (void)0
-    #define LOG_ERROR (void)0
-    #define LOG_FATAL (void)0
-    #define LOG_ASSERT (void)0
+    #define LOG_TRACE(...) (void)0
+    #define LOG_DEBUG(...) (void)0
+    #define LOG_INFO(...) (void)0
+    #define LOG_WARN(...) (void)0
+    #define LOG_ERROR(...) (void)0
+    #define LOG_FATAL(...) (void)0
+    #define LOG_ASSERT(...) (void)0
 #endif
