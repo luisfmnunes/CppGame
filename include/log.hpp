@@ -1,6 +1,7 @@
 #pragma once
 
 #include<spdlog/spdlog.h>
+#include<filesystem>
 #include<source_location>
 
 #define ENGINE_DEFAULT_LOGGER_NAME "defaultlogger"
@@ -19,8 +20,8 @@
     #define LOG_INFO(...) if(spdlog::get(ENGINE_DEFAULT_LOGGER_NAME) != nullptr) spdlog::get(ENGINE_DEFAULT_LOGGER_NAME)->info(__VA_ARGS__);
     #define LOG_WARN(...) if(spdlog::get(ENGINE_DEFAULT_LOGGER_NAME) != nullptr) spdlog::get(ENGINE_DEFAULT_LOGGER_NAME)->warn(__VA_ARGS__);
     #define LOG_ERROR(...) if(spdlog::get(ENGINE_DEFAULT_LOGGER_NAME) != nullptr) spdlog::get(ENGINE_DEFAULT_LOGGER_NAME)->error(__VA_ARGS__);
-    #define LOG_FATAL(...) if(spdlog::get(ENGINE_DEFAULT_LOGGER_NAME) != nullptr) spdlog::get(ENGINE_DEFAULT_LOGGER_NAME)->critical(__VA_ARGS__);
-    #define LOG_ASSERT(x, msg) if ((x)) {} else {auto s = std::source_location::current(); LOG_FATAL("ASSERT - {} | MSG: {}, {}:{}:{}.{}", #x, msg, s.file_name(), s.function_name(), s.line(), s.columns()); DEBUG_BREAK }
+    #define LOG_FATAL(...) if(spdlog::get(ENGINE_DEFAULT_LOGGER_NAME) != nullptr) spdlog::get(ENGINE_DEFAULT_LOGGER_NAME)->critical(__VA_ARGS__); 
+    #define LOG_ASSERT(x, msg) if ((x)) {} else {auto s = std::source_location::current(); LOG_FATAL("ASSERT - {} | MSG: {}, {}({}:{}) `{}`", #x, msg, std::filesystem::path(s.file_name()).filename().c_str(), s.line(), s.column(), s.function_name()) DEBUG_BREAK}
 #else
     #define LOG_TRACE(...) (void)0
     #define LOG_DEBUG(...) (void)0

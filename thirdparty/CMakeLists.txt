@@ -1,3 +1,5 @@
+add_subdirectory(glad)
+
 if(LOCAL_SDL)
     add_subdirectory(SDL EXCLUDE_FROM_ALL)
 else()
