@@ -11,6 +11,8 @@ namespace game::graphics{
 
         void Bind();
         void Unbind();
+
+        inline uint32_t GetVertexCount() const { return mVertexCount; }
     
     private:
         uint32_t mVertexCount;
