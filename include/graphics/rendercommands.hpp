@@ -4,7 +4,7 @@
 
 
 
-namespace game::graphic{
+namespace game::graphics{
 
     class Mesh;
     class Shader;
