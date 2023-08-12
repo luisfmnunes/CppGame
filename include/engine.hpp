@@ -1,5 +1,7 @@
 #pragma once
 
+#include <log.hpp>
+#include <core/window.hpp>
 #include <manager/logManager.hpp>
 
 namespace game{
@@ -7,22 +9,26 @@ namespace game{
     class Engine{
 
     public:
-        Engine operator=(const Engine&) = delete;
-
+        Engine(const Engine&) = delete;
+        Engine& operator=(const Engine&) = delete;
         static Engine& GetInstance();
+        ~Engine() {}
 
         void Run();
-        bool Initialize();
-        void Shutdown();
+        inline void Quit() { mIsRunning = false; }
+        
 
     private:
-        
+        bool mIsRunning;
+        core::Window mWindow;
         //Managers
         managers::LogManager mLogManager;
+        [[nodiscard]] bool Initialize();
+        void Shutdown();
+        static Engine* instance;
 
     protected:
         Engine();
-        static Engine* instance;
         void GetInfo();
 
 
