@@ -2,8 +2,6 @@
 
 #include<memory>
 
-
-
 namespace game::graphics{
 
     class Mesh;

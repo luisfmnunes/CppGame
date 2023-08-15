@@ -6,7 +6,7 @@ namespace game::graphics{
 
     class Mesh{
     public:
-        Mesh(float* vertexArray, uint64_t vertexCount, uint64_t dimensions);
+        Mesh(float* vertexArray, uint32_t vertexCount, uint32_t dimensions);
         ~Mesh();
 
         void Bind();

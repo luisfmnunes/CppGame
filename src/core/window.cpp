@@ -39,16 +39,6 @@ namespace game::core{
 
         gladLoadGLLoader((GLADloadproc) SDL_GL_GetProcAddress);
 
-        // TODO: Move to render initialization
-        glEnable(GL_DEPTH_TEST);
-        glDepthFunc(GL_LEQUAL);
-
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC1_ALPHA);
-
-        glClearColor(0, 0, 0, 255);
-        // End TODO
-
         return true;
     }
 
@@ -74,7 +64,7 @@ namespace game::core{
     }
 
     void Window::BeginRender(){
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        Engine::GetInstance().GetRenderManager().Clear();
     }
 
     void Window::EndRender(){

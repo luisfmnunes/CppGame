@@ -3,6 +3,7 @@
 #include <log.hpp>
 #include <core/window.hpp>
 #include <manager/logManager.hpp>
+#include <manager/renderManager.hpp>
 
 namespace game{
 
@@ -17,12 +18,18 @@ namespace game{
         void Run();
         inline void Quit() { mIsRunning = false; }
         
+        //Managers
+        inline managers::RenderManager& GetRenderManager() { return mRenderManager; }
 
     private:
         bool mIsRunning;
+        bool mIsInitialized;
         core::Window mWindow;
+        
         //Managers
         managers::LogManager mLogManager;
+        managers::RenderManager mRenderManager;
+
         [[nodiscard]] bool Initialize();
         void Shutdown();
         static Engine* instance;

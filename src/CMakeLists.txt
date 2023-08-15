@@ -2,8 +2,9 @@ add_executable(${PROJECT_NAME})
 
 file(GLOB CORE_SOURCES CONFIGURE_DEPENDS ${CMAKE_SOURCE_DIR}/src/core/*.cpp)
 file(GLOB MANAGER_SOURCES CONFIGURE_DEPENDS ${CMAKE_SOURCE_DIR}/src/manager/*.cpp )
+file(GLOB GRAPHICS_SOURCES  CONFIGURE_DEPENDS ${CMAKE_SOURCE_DIR}/src/graphics/*.cpp )
 
-target_sources(${PROJECT_NAME} PRIVATE main.cpp engine.cpp ${CORE_SOURCES} ${MANAGER_SOURCES})
+target_sources(${PROJECT_NAME} PRIVATE main.cpp engine.cpp ${CORE_SOURCES} ${MANAGER_SOURCES} ${GRAPHICS_SOURCES})
 target_include_directories( 
     ${PROJECT_NAME} 
     PRIVATE ${CMAKE_SOURCE_DIR}/include 

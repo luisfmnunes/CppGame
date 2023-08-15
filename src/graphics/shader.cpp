@@ -1,50 +1,51 @@
 #include<graphics/shader.hpp>
-#include<glad/glad.h>
-
+#include<graphics/helpers.hpp>
 #include<log.hpp>
-#include "shader.hpp"
+
+
+#include<glad/glad.h>
 
 namespace game::graphics{
 
     Shader::Shader(const std::string& vertex, const std::string& fragment){
 
-        mProgramId = glCreateProgram();
+        mProgramId = glCreateProgram(); LOG_CHECK_GL_ERROR
 
         int status = GL_FALSE;
         char errorLog[512];
 
         // Shader Initialization
-        uint32_t vertexShaderId = glCreateShader(GL_VERTEX_SHADER);
+        uint32_t vertexShaderId = glCreateShader(GL_VERTEX_SHADER); LOG_CHECK_GL_ERROR
         {
             const GLchar* glSource = vertex.c_str();
-            glShaderSource(vertexShaderId, 1, &glSource, NULL);
-            glCompileShader(vertexShaderId);
+            glShaderSource(vertexShaderId, 1, &glSource, NULL); LOG_CHECK_GL_ERROR
+            glCompileShader(vertexShaderId); LOG_CHECK_GL_ERROR
 
-            glGetShaderiv(vertexShaderId, GL_COMPILE_STATUS, &status);
+            glGetShaderiv(vertexShaderId, GL_COMPILE_STATUS, &status); LOG_CHECK_GL_ERROR
             
             if(status != GL_TRUE){
-                glGetShaderInfoLog(vertexShaderId, sizeof(errorLog), NULL, errorLog);
+                glGetShaderInfoLog(vertexShaderId, sizeof(errorLog), NULL, errorLog); LOG_CHECK_GL_ERROR
                 LOG_ERROR("Shader compilation error: {}", errorLog);
             } else {
-                glAttachShader(mProgramId, vertexShaderId);
+                glAttachShader(mProgramId, vertexShaderId); LOG_CHECK_GL_ERROR
             }
         }
 
-        uint32_t fragmentShaderId = glCreateShader(GL_VERTEX_SHADER);
+        uint32_t fragmentShaderId = glCreateShader(GL_FRAGMENT_SHADER); LOG_CHECK_GL_ERROR
 
         if(status == GL_TRUE){
         // Fragment Initialization
             const GLchar* glSource = fragment.c_str();
-            glShaderSource(fragmentShaderId, 1, &glSource, NULL);
-            glCompileShader(fragmentShaderId);
+            glShaderSource(fragmentShaderId, 1, &glSource, NULL); LOG_CHECK_GL_ERROR
+            glCompileShader(fragmentShaderId); LOG_CHECK_GL_ERROR
 
-            glGetShaderiv(fragmentShaderId, GL_COMPILE_STATUS, &status);
+            glGetShaderiv(fragmentShaderId, GL_COMPILE_STATUS, &status); LOG_CHECK_GL_ERROR
             
             if(status != GL_TRUE){
-                glGetShaderInfoLog(fragmentShaderId, sizeof(errorLog), NULL, errorLog);
+                glGetShaderInfoLog(fragmentShaderId, sizeof(errorLog), NULL, errorLog); LOG_CHECK_GL_ERROR
                 LOG_ERROR("Fragment shader compilation error: {}", errorLog);
             } else {
-                glAttachShader(mProgramId, fragmentShaderId);
+                glAttachShader(mProgramId, fragmentShaderId); LOG_CHECK_GL_ERROR
             }
         }
 
@@ -52,73 +53,73 @@ namespace game::graphics{
         LOG_ASSERT(status == GL_TRUE, "Error Compiling Shader");
 
         if (status == GL_TRUE){
-            glLinkProgram(mProgramId);
-            glValidateProgram(mProgramId);
-            glGetProgramiv(mProgramId, GL_LINK_STATUS, &status);
+            glLinkProgram(mProgramId); LOG_CHECK_GL_ERROR
+            glValidateProgram(mProgramId); LOG_CHECK_GL_ERROR
+            glGetProgramiv(mProgramId, GL_LINK_STATUS, &status); LOG_CHECK_GL_ERROR
 
             if(status != GL_TRUE){
-                glGetProgramInfoLog(mProgramId, sizeof(errorLog), NULL, errorLog);
+                glGetProgramInfoLog(mProgramId, sizeof(errorLog), NULL, errorLog); LOG_CHECK_GL_ERROR
                 LOG_ERROR("Shader link error: {}", errorLog);
-                glDeleteProgram(mProgramId);
+                glDeleteProgram(mProgramId); LOG_CHECK_GL_ERROR
 
                 mProgramId = -1;
             }
         }
 
-        glDeleteShader(vertexShaderId);
-        glDeleteShader(fragmentShaderId);
+        glDeleteShader(vertexShaderId); LOG_CHECK_GL_ERROR
+        glDeleteShader(fragmentShaderId); LOG_CHECK_GL_ERROR
 
 
     }
 
     Shader::~Shader(){
-        glUseProgram(0);
-        glDeleteProgram(mProgramId);
+        glUseProgram(0); LOG_CHECK_GL_ERROR
+        glDeleteProgram(mProgramId); LOG_CHECK_GL_ERROR
     }
 
     void Shader::Bind(){
-        glUseProgram(mProgramId);
+        glUseProgram(mProgramId); LOG_CHECK_GL_ERROR
     }
 
     void Shader::Unbind(){
-        glUseProgram(0);
+        glUseProgram(0); LOG_CHECK_GL_ERROR
     }
 
     void Shader::SetUniformInt(const std::string &name, int val)
     {
-        glUseProgram(mProgramId);
-        glUniform1i(GetUniformLocation(name), val);
+        glUseProgram(mProgramId); LOG_CHECK_GL_ERROR
+        glUniform1i(GetUniformLocation(name), val); LOG_CHECK_GL_ERROR
     }
 
     void Shader::SetUniformFloat(const std::string &name, float val)
     {
-        glUseProgram(mProgramId);
-        glUniform1f(GetUniformLocation(name), val);
+        glUseProgram(mProgramId); LOG_CHECK_GL_ERROR
+        glUniform1f(GetUniformLocation(name), val); LOG_CHECK_GL_ERROR
     }
 
     void Shader::SetUniformFloat2(const std::string &name, float val1, float val2)
     {
-        glUseProgram(mProgramId);
-        glUniform2f(GetUniformLocation(name), val1, val2);
+        glUseProgram(mProgramId); LOG_CHECK_GL_ERROR
+        glUniform2f(GetUniformLocation(name), val1, val2); LOG_CHECK_GL_ERROR
     }
 
     void Shader::SetUniformFloat3(const std::string &name, float val1, float val2, float val3)
     {
-        glUseProgram(mProgramId);
-        glUniform3f(GetUniformLocation(name), val1, val2, val3);
+        glUseProgram(mProgramId); LOG_CHECK_GL_ERROR
+        glUniform3f(GetUniformLocation(name), val1, val2, val3); LOG_CHECK_GL_ERROR
     }
 
     void Shader::SetUniformFloat4(const std::string &name, float val1, float val2, float val3, float val4)
     {
-        glUseProgram(mProgramId);
-        glUniform4f(GetUniformLocation(name), val1, val2, val3, val4);
+        glUseProgram(mProgramId); LOG_CHECK_GL_ERROR
+        glUniform4f(GetUniformLocation(name), val1, val2, val3, val4); LOG_CHECK_GL_ERROR
     }
 
     int Shader::GetUniformLocation(const std::string &name)
     {
         auto it = mUniformLocations.find(name);
         if (it == mUniformLocations.end())
-            mUniformLocations[name] = glGetUniformLocation(mProgramId, name.c_str());
+            mUniformLocations[name] = glGetUniformLocation(mProgramId, name.c_str()); LOG_CHECK_GL_ERROR
 
         return mUniformLocations[name];
     }

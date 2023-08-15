@@ -1,8 +1,11 @@
 #include<graphics/rendercommands.hpp>
-#include<log.hpp>
-
 #include<graphics/mesh.hpp>
 #include<graphics/shader.hpp>
+#include<graphics/helpers.hpp>
+
+#include<log.hpp>
+
+
 #include<glad/glad.h>
 
 namespace game::graphics::rendercommands
@@ -18,7 +21,7 @@ namespace game::graphics::rendercommands
             mesh->Bind();
             shader->Bind();
 
-            glDrawArrays(GL_TRIANGLE_STRIP, 0, mesh->GetVertexCount());
+            glDrawArrays(GL_TRIANGLE_STRIP, 0, mesh->GetVertexCount()); LOG_CHECK_GL_ERROR
 
             shader->Unbind();
             mesh->Unbind();
